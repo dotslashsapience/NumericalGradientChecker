@@ -93,3 +93,5 @@ def compare_gradients(analytical_grads, numerical_grads, tolerance=1e-7):
         print(f"Tolerance:      {tolerance:.2e}")
 
     return relative_error
+
+
