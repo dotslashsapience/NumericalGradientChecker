@@ -50,3 +50,46 @@ def compute_numerical_gradient(parameters, forward_prop_func, X, y, epsilon=1e-5
 
     return numerical_grads
 
+def _dictionary_to_vector(parameters_dict):
+    """Unpack all parameter values from a dictionary into a single 1D vector."""
+    all_vectors = []
+    # iterate through param dict and unpack each matrix to apply NumPy ravel() to convert to 1D array
+    for param_name in sorted(parameters_dict.keys()):
+        # this will convert each matrix into individual vectors and append those vectors to all_vectors
+        all_vectors.append(parameters_dict[param_name].ravel())
+
+    # concatenate all vectors to create a single long vector.
+    vector = np.concatenate(all_vectors)
+    return vector
+
+def compare_gradients(analytical_grads, numerical_grads, tolerance=1e-7):
+    """Compare the analytical gradients from a backpropagation algorithm to the numerical gradients.
+
+    Prints a PASS/FAIL message.
+
+    Args:
+        analytical_grads: dict of grads derived by Backprop algorithm.
+        numerical_grads: dict of grads derived by numerical gradient checker.
+        tolerance: float, the threshold for passing"""
+    # convert both gradient dicts to vector.
+    ana_grads_vec = _dictionary_to_vector(analytical_grads)
+    num_grads_vec = _dictionary_to_vector(numerical_grads)
+    # compute L2 norm of the difference between vectors for the numerator
+    numerator = np.linalg.norm(ana_grads_vec - num_grads_vec)
+    #compute the L2 norm of both vectors for the denominator
+    denom_ana = np.linalg.norm(ana_grads_vec)
+    denom_num = np.linalg.norm(num_grads_vec)
+    #get the denominator
+    denominator = denom_ana + denom_num
+    relative_error = numerator / denominator
+
+    if relative_error < tolerance:
+        print(f"Gradient check PASSED")
+        print(f"Relative Error: {relative_error:.2e}")
+        print(f"Tolerance:      {tolerance:.2e}")
+    else:
+        print(f"Gradient check FAILED")
+        print(f"Relative Error: {relative_error:.2e}")
+        print(f"Tolerance:      {tolerance:.2e}")
+
+    return relative_error
