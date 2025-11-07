@@ -30,7 +30,7 @@ it should not be used for large Neural Networks.
 ___
 ## Architecture
 This is a very simplistic setup that includes 3 functions. <br><br>
-### 1. `compute_numerical_grads()`
+### 1. `compute_numerical_gradient()`
 The first function `compute_numerical_gradient()`, a `forward_prop_func`
 `X` for **input data** and `y` for **labels** (assumes a classification
 problem) handles the numerical computation of the gradients using the 
@@ -56,7 +56,7 @@ ___
 ### 2. `compare_gradients()`
 The second function `compare_gradients()` takes in the `analytical_grads`
 dict which is derived from your backprop algorithm, the `numerical_grads`
-dict derived from `compute_numerical_grads()` and a `tolerance` which
+dict derived from `compute_numerical_gradient()` and a `tolerance` which
 defaults to $1\cdot10^{-7}$.<br><br>
 The formula used to determine error is:
 $$
