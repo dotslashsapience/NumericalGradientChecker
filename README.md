@@ -67,6 +67,6 @@ individual vectors. The $L_2$ norm is used and the $\text{Relative Error}$
 is calculated. The function then prints a pass/fail report.
 ___
 ### 3. `_dictionary_to_vector()`
-This is a simple helper function that takes int a `parameters_dict`
+This is a simple helper function that takes in a `parameters_dict`
 and returns a Vector of the parameter values.
 
